@@ -1,5 +1,2 @@
-import React from 'react';
-
-export const sum = (a: number, b: number): number => {
-  return a + b;
-}
+// eslint-disable-next-line import/prefer-default-export
+export const sum = (a: number, b: number): number => a + b;
