@@ -20,7 +20,10 @@
   "author": "Prakhar Srivastav",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf lib && rollup -c"
+    "prepare": "husky install",
+    "build": "rimraf lib && rollup -c",
+    "lint:ts": "eslint 'src/**/*.{js,jsx,ts,tsx}' --max-warnings 0 --cache",
+    "lint:fix": "npm-run-all 'lint:ts --fix'"
   },
   "dependencies": {},
   "devDependencies": {
@@ -28,7 +31,21 @@
     "@rollup/plugin-node-resolve": "^13.1.1",
     "@rollup/plugin-typescript": "^8.3.0",
     "@types/react": "^17.0.38",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.5",
+    "prettier": "^2.5.1",
     "react": "^17.0.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.62.0",
@@ -41,5 +58,10 @@
   },
   "peerDependencies": {
     "react": "^17.0.2"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "yarn lint:ts --fix"
+    ]
   }
 }

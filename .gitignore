@@ -6,3 +6,4 @@ coverage
 dist-modules
 lib
 /old_code
+yarn-error.log
