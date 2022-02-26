@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import escape from 'lodash/escape';
+import ClassNames from 'classnames';
 
 const maybeScrollSuggestionIntoView = (suggestionEl, suggestionsContainer) => {
   const containerHeight = suggestionsContainer.offsetHeight;
@@ -27,7 +28,12 @@ class Suggestions extends Component {
     minQueryLength: PropTypes.number,
     shouldRenderSuggestions: PropTypes.func,
     isFocused: PropTypes.bool.isRequired,
-    classNames: PropTypes.object,
+    classNames: PropTypes.shape({
+      activeSuggestion: PropTypes.string,
+      suggestions: PropTypes.string,
+      suggestionsList: PropTypes.string,
+      suggestionsListItem: PropTypes.string,
+    }),
     labelField: PropTypes.string.isRequired,
     renderSuggestion: PropTypes.func,
   };
@@ -97,16 +103,17 @@ class Suggestions extends Component {
     const { props } = this;
 
     const suggestions = props.suggestions.map(
-      function(item, i) {
+      function (item, i) {
         return (
           <li
             key={i}
             onMouseDown={props.handleClick.bind(null, i)}
             onTouchStart={props.handleClick.bind(null, i)}
             onMouseOver={props.handleHover.bind(null, i)}
-            className={
-              i === props.selectedIndex ? props.classNames.activeSuggestion : ''
-            }>
+            className={ClassNames(
+              i === props.selectedIndex && props.classNames.activeSuggestion,
+              props.classNames.suggestionsListItem
+            )}>
             {this.renderSuggestion(item, props.query)}
           </li>
         );
@@ -126,7 +133,10 @@ class Suggestions extends Component {
           this.suggestionsContainer = elem;
         }}
         className={this.props.classNames.suggestions}>
-        <ul> {suggestions} </ul>
+        <ul className={this.props.classNames.suggestionsList}>
+          {' '}
+          {suggestions}{' '}
+        </ul>
       </div>
     );
   }
